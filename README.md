@@ -439,19 +439,19 @@ k8s-llm-asistan/
 ## 10. Geliştirme Yol Haritası 
 
 
-**Faz 1 — Sadece Okuma (1-2 hafta)**
+**Faz 1 — Sadece Okuma **
 Sadece salt-okunur intent'leri (`list_pods`, `describe_resource`, `get_logs`) destekle. Onay mekanizması yok, çünkü risk yok. Bu faz, LLM tercüman katmanını ve doğrulama katmanını sağlamlaştırmaya odaklanır — en kırılgan kısım burası.
 
-**Faz 2 — Yarı-Yıkıcı Eylemler + Onay Mekanizması (1-2 hafta)**
+**Faz 2 — Yarı-Yıkıcı Eylemler + Onay Mekanizması **
 `restart_deployment`, `scale_deployment` eklenir. `AWAITING_CONFIRMATION` durumu ve onay UI'ı inşa edilir. Bu fazın çıktısı, projenin "öne çıkan" mühendislik kararını (LLM'e yıkıcı yetki vermeme) gösterebileceğin ilk versiyon.
 
-**Faz 3 — Raporlama ve Özet Katmanı (3-5 gün)**
+**Faz 3 — Raporlama ve Özet Katmanı **
 İkinci LLM çağrısı ile insan-okunur özetler. Canlı `watch` bağlantılarıyla rollout takibi.
 
-**Faz 4 — Yıkıcı Eylemler + Çift Onay (3-5 gün)**
+**Faz 4 — Yıkıcı Eylemler + Çift Onay **
 `delete_*`, `scale_to_zero` eklenir, çift-doğrulama (kaynak adını yeniden yazma) mekanizması inşa edilir. Audit log sistemi eklenir.
 
-**Faz 5 — Sertleştirme (devam eden)**
+**Faz 5 — Sertleştirme **
 RBAC sıkılaştırma, rate limiting, çok-kullanıcılı oturum yönetimi, prompt injection testleri (örneğin pod loglarına gömülü zararlı metnin LLM'i manipüle edip edemediğini test etme).
 
 ---
