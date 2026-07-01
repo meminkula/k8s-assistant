@@ -7,33 +7,33 @@ class KubernetesExecutor:
         try:
             config.load_kube_config()
             self.core_v1 = client.CoreV1Api()
-            print("Kubernetes kümesine başarıyla bağlanıldı!")
+            print("Connected to kubernetes cluster.")
         except Exception as e:
-            print(f"Kubernetes bağlantısı başarısız oldu: {e}")
+            print(f"Failed to connect kubernetes: {e}")
             raise e
 
     def list_pods(self, namespace: str = "default") -> dict:
         try:
-            ham_pod_listesi = self.core_v1.list_namespaced_pod(namespace=namespace)
-            temiz_podlar = []
+            main_pod_list = self.core_v1.list_namespaced_pod(namespace=namespace)
+            clean_pods = []
 
-            for pod in ham_pod_listesi.items:
-                pod_bilgisi = {
+            for pod in main_pod_list.items:
+                pod_info = {
                     "name": pod.metadata.name,
                     "status": pod.status.phase,
                     "ip": pod.status.pod_ip
                 }
-                temiz_podlar.append(pod_bilgisi)
+                clean_pods.append(pod_info)
 
             return {
                 "status": "success",
                 "namespace": namespace,
-                "data": temiz_podlar
+                "data": clean_pods
             }
 
         except ApiException as e:
             return {
                 "status": "error",
-                "message": f"Kubernetes API Hatası: {e.reason}",
+                "message": f"Kubernetes API Error: {e.reason}",
                 "code": e.status
             }
