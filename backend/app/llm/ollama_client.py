@@ -39,7 +39,7 @@ class LLMTranslator:
                     {"role":"system", "content": self._get_system_prompt()},
                     {"role":"user", "content": user_text},
                 ],
-                options={"temrature":0.0}
+                options={"temperature":0.0}
             )
             return response.message.content
         except Exception as e:
